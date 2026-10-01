@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+    <span class="eyebrow">
+        AI FITNESS PLANNER
+    </span>
+
+    <h1>
+        Build a workout plan
+        that fits <span>you.</span>
+    </h1>
+
+    <p>
+        Enter your basic fitness information and
+        FitBuddy will create a personalized
+        7-day workout plan and nutrition tip.
+    </p>
+
+</section>
+
+
+<section class="card form-card">
+
+    <h2>
+        Your Fitness Profile
+    </h2>
+
+
+    <form
+        method="post"
+        action="/generate-workout"
+        class="grid-form"
+    >
+
+        <label>
+
+            Name
+
+            <input
+                type="text"
+                name="name"
+                required
+                minlength="2"
+                maxlength="100"
+                placeholder="Enter your name"
+            >
+
+        </label>
+
+
+        <label>
+
+            User ID
+
+            <input
+                type="text"
+                name="user_id"
+                required
+                minlength="2"
+                maxlength="50"
+                placeholder="Example: FB001"
+            >
+
+        </label>
+
+
+        <label>
+
+            Age
+
+            <input
+                type="number"
+                name="age"
+                min="13"
+                max="100"
+                required
+                placeholder="Age"
+            >
+
+        </label>
+
+
+        <label>
+
+            Weight (kg)
+
+            <input
+                type="number"
+                name="weight"
+                min="20"
+                max="500"
+                step="0.1"
+                required
+                placeholder="Weight"
+            >
+
+        </label>
+
+
+        <label>
+
+            Fitness Goal
+
+            <select name="goal" required>
+
+                <option value="weight loss">
+                    Weight Loss
+                </option>
+
+                <option value="muscle gain">
+                    Muscle Gain
+                </option>
+
+                <option value="general wellness">
+                    General Wellness
+                </option>
+
+                <option value="flexibility">
+                    Flexibility
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <label>
+
+            Workout Intensity
+
+            <select
+                name="intensity"
+                required
+            >
+
+                <option value="low">
+                    Low
+                </option>
+
+                <option
+                    value="medium"
+                    selected
+                >
+                    Medium
+                </option>
+
+                <option value="high">
+                    High
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <div class="full-width">
+
+            <button
+                type="submit"
+                class="button"
+            >
+                Generate 7-Day Plan
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="info-grid">
+
+    <article class="mini-card">
+
+        <strong>
+            01
+        </strong>
+
+        <h3>
+            Personalized
+        </h3>
+
+        <p>
+            Uses your goal, age, weight
+            and workout intensity.
+        </p>
+
+    </article>
+
+
+    <article class="mini-card">
+
+        <strong>
+            02
+        </strong>
+
+        <h3>
+            Adaptive
+        </h3>
+
+        <p>
+            Give feedback and update
+            your existing workout plan.
+        </p>
+
+    </article>
+
+
+    <article class="mini-card">
+
+        <strong>
+            03
+        </strong>
+
+        <h3>
+            Persistent
+        </h3>
+
+        <p>
+            User profiles and workout
+            plans are stored in SQLite.
+        </p>
+
+    </article>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <span class="eyebrow">
+        ADMIN VIEW
+    </span>
+
+    <h1>
+        All Users
+    </h1>
+
+    <p>
+        View registered users and their
+        original and updated plans.
+    </p>
+
+</section>
+
+
+{% if not users %}
+
+<div class="card empty">
+
+    <h2>
+        No users yet
+    </h2>
+
+    <p>
+        Generate a workout plan from the
+        home page first.
+    </p>
+
+</div>
+
+{% else %}
+
+
+<div class="table-wrap card">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        User
+    </th>
+
+    <th>
+        Profile
+    </th>
+
+    <th>
+        Goal / Intensity
+    </th>
+
+    <th>
+        Original Plan
+    </th>
+
+    <th>
+        Updated Plan
+    </th>
+
+    <th>
+        Feedback
+    </th>
+
+    <th>
+        Action
+    </th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+{% for user in users %}
+
+<tr>
+
+<td>
+
+<strong>
+    {{ user.name }}
+</strong>
+
+<br>
+
+<small>
+    {{ user.user_id }}
+</small>
+
+</td>
+
+
+<td>
+
+{{ user.age }} years
+
+<br>
+
+{{ user.weight }} kg
+
+</td>
+
+
+<td>
+
+{{ user.goal }}
+
+<br>
+
+{{ user.intensity }}
+
+</td>
+
+
+<td>
+
+{% if user.plan %}
+
+<details>
+
+<summary>
+    View
+</summary>
+
+<pre class="compact">{{ user.plan.original_plan }}</pre>
+
+</details>
+
+{% else %}
+
+—
+
+{% endif %}
+
+</td>
+
+
+<td>
+
+{% if user.plan and user.plan.updated_plan %}
+
+<details>
+
+<summary>
+    View
+</summary>
+
+<pre class="compact">{{ user.plan.updated_plan }}</pre>
+
+</details>
+
+{% else %}
+
+Not updated
+
+{% endif %}
+
+</td>
+
+
+<td>
+
+{% if user.plan and user.plan.feedback %}
+
+{{ user.plan.feedback }}
+
+{% else %}
+
+—
+
+{% endif %}
+
+</td>
+
+
+<td>
+
+<button
+    class="danger"
+    onclick="deleteUser('{{ user.user_id }}')"
+>
+    Delete
+</button>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endif %}
+
+
+<script>
+
+async function deleteUser(userId) {
+
+    const confirmed = confirm(
+        "Delete user " + userId + " and their plan?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const response = await fetch(
+        "/admin/delete-user/"
+        + encodeURIComponent(userId),
+        {
+            method: "POST"
+        }
+    );
+
+
+    if (response.ok) {
+
+        location.reload();
+
+    } else {
+
+        alert(
+            "Could not delete the user."
+        );
+
+    }
+
+}
+
+</script>
+
+{% endblock %}
